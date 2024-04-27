@@ -49,6 +49,7 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-jackson:2.1.0")
 //    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.17.+")
+    implementation("com.squareup.picasso:picasso:2.8")
     implementation(project(":core"))
 //    implementation("androidx.activity:activity:1.8.0")
 //    implementation("implementation 'com.google.code.gson:gson:2.10.1'")

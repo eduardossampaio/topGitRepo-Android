@@ -15,7 +15,7 @@
         android:theme="@style/Theme.TopRepos"
         tools:targetApi="31">
         <activity
-            android:name=".views.ListRepositoriesActivity"
+            android:name=".views.list_repositories.ListRepositoriesActivity"
             android:exported="false" />
         <activity
             android:name=".views.SplashActivity"

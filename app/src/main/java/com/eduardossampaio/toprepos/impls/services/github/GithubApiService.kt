@@ -65,7 +65,8 @@ class GithubApiService : GitApiService {
 
         )
 
-        return listOf(listOf(repo1,repo2,repo3,repo4)).toObservable();
+        //return listOf(listOf(repo1,repo2,repo3,repo4)).toObservable()
+        return  Observable.just<List<Repo>>(listOf(repo1,repo2,repo3,repo4,repo1,repo2,repo3,repo4,repo1,repo2,repo3,repo4))
     }
 
 

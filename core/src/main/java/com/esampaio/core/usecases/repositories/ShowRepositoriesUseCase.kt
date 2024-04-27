@@ -63,6 +63,6 @@ class ShowRepositoriesUseCase : UseCase{
                     showRepositoriesPresenter.showError(it)
                 }
             )
-        subscribe.dispose()
+        //subscribe.dispose()
     }
 }

@@ -3,19 +3,15 @@ package com.eduardossampaio.toprepos.views
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import com.eduardossampaio.toprepos.R
-import com.eduardossampaio.toprepos.impls.services.github.GithubApiService
-import com.esampaio.core.services.gitService.GitApiService
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.schedulers.Schedulers
+import com.eduardossampaio.toprepos.views.list_repositories.ListRepositoriesActivity
 
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        val intent = Intent(this,ListRepositoriesActivity::class.java)
+        val intent = Intent(this, ListRepositoriesActivity::class.java)
         startActivity(intent);
 
 //        val api: GitApiService = GithubApiService()
