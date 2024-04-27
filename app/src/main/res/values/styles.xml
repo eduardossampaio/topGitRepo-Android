@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="GreenText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">#00FF00</item>
+    </style>
+
+    <style name="ListItem">
+        <item name="android:padding">5dp</item>
+    </style>
+    <style name="AvatarImage" >
+        <item name="android:maxWidth">32dp</item>
+        <item name="android:maxHeight">32dp</item>
+    </style>
+
+    <style name="RepoName" >
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingStart">12dp</item>
+    </style>
+
+    <style name="UserName" >
+       <item name="android:textSize">12sp</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+    </style>
+
+    <style name="ListItemIcon">
+        <item name="tint">?iconColorPrimary</item>
+    </style>
+
+    <style name="Separator">
+        <item name="android:background">?iconColorPrimary</item>
+        <item name="android:alpha">0.5</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
+
+</resources>

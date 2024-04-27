@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">TopRepos</string>
-    <string name="list_repo_title">TopRepositories</string>
+    <string name="list_repo_title">Top Java Repositories</string>
 </resources>

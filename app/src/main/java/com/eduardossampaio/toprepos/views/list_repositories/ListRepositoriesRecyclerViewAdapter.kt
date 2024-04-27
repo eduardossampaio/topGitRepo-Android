@@ -28,7 +28,7 @@ class ListRepositoriesRecyclerViewAdapter(private val context:Context): ListAdap
     }
 
     private var items: MutableList<Repo> = mutableListOf()
-    
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListItemViewHolder {
        val view = LayoutInflater.from(context).inflate(R.layout.repository_list_item,parent,false);
         return ListItemViewHolder(view);
