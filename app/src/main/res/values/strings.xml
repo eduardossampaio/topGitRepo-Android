@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">TopRepos</string>
+    <string name="list_repo_title">TopRepositories</string>
+</resources>
