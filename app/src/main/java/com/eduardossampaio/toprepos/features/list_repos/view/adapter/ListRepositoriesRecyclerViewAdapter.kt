@@ -2,14 +2,11 @@ package com.eduardossampaio.toprepos.features.list_repos.view.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.eduardossampaio.toprepos.R
+import com.eduardossampaio.toprepos.databinding.RepositoryListItemBinding
 import com.esampaio.core.models.Repo
 import com.squareup.picasso.Picasso
 
@@ -32,8 +29,8 @@ class ListRepositoriesRecyclerViewAdapter(private val context:Context, private v
     private var items: MutableList<Repo> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListItemViewHolder {
-       val view = LayoutInflater.from(context).inflate(R.layout.repository_list_item,parent,false);
-        return ListItemViewHolder(view){
+        val binding = RepositoryListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ListItemViewHolder(binding){
             onItemSelected(it)
         }
     }
@@ -52,23 +49,16 @@ class ListRepositoriesRecyclerViewAdapter(private val context:Context, private v
         items = currentList
     }
 
-    inner class ListItemViewHolder(itemView: View, private val onItemClicked: (Repo) -> Unit) : ViewHolder(itemView) {
-
-        private val userImage:ImageView = itemView.findViewById(R.id.userProfile)
-        private val userName:TextView = itemView.findViewById(R.id.userName)
-        private val repoName:TextView = itemView.findViewById(R.id.repoName)
-        private val repoDescription:TextView = itemView.findViewById(R.id.repoDescription)
-        private val starCount:TextView = itemView.findViewById(R.id.star_count)
-        private val forkCount:TextView = itemView.findViewById(R.id.fork_count)
+    inner class ListItemViewHolder(private val views: RepositoryListItemBinding, private val onItemClicked: (Repo) -> Unit) : ViewHolder(views.root) {
 
         fun bind(item:Repo){
-            userName.text = item.authorName
-            repoName.text = item.name
-            repoDescription.text = item.description
-            starCount.text = item.starCount.toString()
-            forkCount.text = item.forkCount.toString()
+            views.userName.text = item.authorName
+            views.repoName.text = item.name
+            views.repoDescription.text = item.description
+            views.starCount.text = item.starCount.toString()
+            views.forkCount.text = item.forkCount.toString()
 
-            Picasso.get().load(item.authorProfilePictureUrl).into(userImage);
+            Picasso.get().load(item.authorProfilePictureUrl).into(views.userProfile);
 
             itemView.setOnClickListener {
                 onItemClicked(item)

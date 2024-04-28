@@ -7,6 +7,9 @@ android {
     namespace = "com.eduardossampaio.toprepos"
     compileSdk = 33
 
+    buildFeatures{
+        viewBinding = true
+    }
 
     defaultConfig {
         applicationId = "com.eduardossampaio.toprepos"

@@ -23,6 +23,7 @@ class ListRepositoriesInteractorImpl(private val useCase: ShowRepositoriesUseCas
     }
 
     override fun start() {
+        presenter.showLoading()
         val onPageChangeDisposable = presenter.onPageChanged.subscribe {page ->
             onPageChangedSubject.onNext(page);
         }
@@ -33,10 +34,6 @@ class ListRepositoriesInteractorImpl(private val useCase: ShowRepositoriesUseCas
     override fun showRepositories(repositories: List<Repo>) {
        presenter.showRepositories(repositories)
     }
-
-
-
-
 
     override fun notifyError(error: Throwable) {
         presenter.showError(error)

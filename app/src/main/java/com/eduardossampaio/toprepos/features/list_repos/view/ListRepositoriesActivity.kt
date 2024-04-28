@@ -7,6 +7,7 @@ import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.eduardossampaio.toprepos.R
+import com.eduardossampaio.toprepos.databinding.ActivityListRepositoriesBinding
 import com.eduardossampaio.toprepos.views.custom.OnReachEndOfListListener
 import com.eduardossampaio.toprepos.views.custom.ScrollableRecyclerView
 import com.eduardossampaio.toprepos.features.list_repos.interactor.ListRepositoriesInteractor
@@ -26,30 +27,19 @@ class ListRepositoriesActivity : AppCompatActivity(), ShowRepositoriesPresenter 
     override val onRepositoryClicked: Observable<Repo> = onRepositoryClickedSubject
     override val onPageChanged: Observable<Int> = onPageChangedSubject
 
-
-    lateinit var loading:ProgressBar
-    lateinit var repositoryList: ScrollableRecyclerView
+    lateinit var views:ActivityListRepositoriesBinding
     lateinit var adapter: ListRepositoriesRecyclerViewAdapter
 
     private var currentPage = 1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_list_repositories)
-        setTitle(R.string.list_repo_title)
+        views = ActivityListRepositoriesBinding.inflate(layoutInflater)
+        setContentView(views.root)
 
-        bindViews();
         setupViews();
-
-//        startKoin{
-//            androidLogger()
-//            androidContext(this@ListRepositoriesActivity)
-//            modules(appModule)
-//        }
 
         interactor.bind(this)
         interactor.start()
-
-
     }
 
     override fun onDestroy() {
@@ -57,18 +47,15 @@ class ListRepositoriesActivity : AppCompatActivity(), ShowRepositoriesPresenter 
 
     }
 
-    private fun bindViews(){
-        loading = findViewById(R.id.loading)
-        repositoryList = findViewById(R.id.repoList);
-    }
     private fun setupViews(){
+        setTitle(R.string.list_repo_title)
         hideLoading()
         adapter = ListRepositoriesRecyclerViewAdapter(this){
-            
+
         }
-        repositoryList.adapter = adapter
-        repositoryList.layoutManager = LinearLayoutManager(this)
-        repositoryList.onReachEndOfListListener = object :OnReachEndOfListListener {
+        views.repoList.adapter = adapter
+        views.repoList.layoutManager = LinearLayoutManager(this)
+        views.repoList.onReachEndOfListListener = object :OnReachEndOfListListener {
             override fun onReachEnd() {
                 currentPage++
                 onPageChangedSubject.onNext(currentPage);
@@ -82,11 +69,11 @@ class ListRepositoriesActivity : AppCompatActivity(), ShowRepositoriesPresenter 
     }
 
     override fun showLoading() {
-        loading.visibility = View.VISIBLE
+        views.loading.visibility = View.VISIBLE
     }
 
     override fun hideLoading() {
-        loading.visibility = View.GONE
+        views.loading.visibility = View.GONE
     }
 
     override fun showError(error: Throwable) {
