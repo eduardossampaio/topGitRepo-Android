@@ -1,4 +1,4 @@
-package com.eduardossampaio.toprepos.views.acitivties.list_repositories
+package com.eduardossampaio.toprepos.features.list_repos.view.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -13,7 +13,7 @@ import com.eduardossampaio.toprepos.R
 import com.esampaio.core.models.Repo
 import com.squareup.picasso.Picasso
 
-class ListRepositoriesRecyclerViewAdapter(private val context:Context): ListAdapter<Repo, ListRepositoriesRecyclerViewAdapter.ListItemViewHolder>(
+class ListRepositoriesRecyclerViewAdapter(private val context:Context, private val onItemSelected: (Repo) -> Unit): ListAdapter<Repo, ListRepositoriesRecyclerViewAdapter.ListItemViewHolder>(
     COMPARATOR
 ) {
 
@@ -33,7 +33,9 @@ class ListRepositoriesRecyclerViewAdapter(private val context:Context): ListAdap
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListItemViewHolder {
        val view = LayoutInflater.from(context).inflate(R.layout.repository_list_item,parent,false);
-        return ListItemViewHolder(view);
+        return ListItemViewHolder(view){
+            onItemSelected(it)
+        }
     }
 
     override fun getItemCount(): Int = items.size
@@ -48,28 +50,29 @@ class ListRepositoriesRecyclerViewAdapter(private val context:Context): ListAdap
         currentList.addAll(newItems);
         submitList(currentList)
         items = currentList
-
-//        items.addAll(newItems)
-//        submitList(items)
-
-
     }
 
-    inner class ListItemViewHolder(itemView: View) : ViewHolder(itemView) {
+    inner class ListItemViewHolder(itemView: View, private val onItemClicked: (Repo) -> Unit) : ViewHolder(itemView) {
 
         private val userImage:ImageView = itemView.findViewById(R.id.userProfile)
         private val userName:TextView = itemView.findViewById(R.id.userName)
         private val repoName:TextView = itemView.findViewById(R.id.repoName)
+        private val repoDescription:TextView = itemView.findViewById(R.id.repoDescription)
         private val starCount:TextView = itemView.findViewById(R.id.star_count)
         private val forkCount:TextView = itemView.findViewById(R.id.fork_count)
 
         fun bind(item:Repo){
             userName.text = item.authorName
             repoName.text = item.name
+            repoDescription.text = item.description
             starCount.text = item.starCount.toString()
             forkCount.text = item.forkCount.toString()
 
             Picasso.get().load(item.authorProfilePictureUrl).into(userImage);
+
+            itemView.setOnClickListener {
+                onItemClicked(item)
+            }
         }
     }
 

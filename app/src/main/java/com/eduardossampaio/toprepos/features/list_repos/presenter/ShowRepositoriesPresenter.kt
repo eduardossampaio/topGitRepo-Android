@@ -1,11 +1,11 @@
-package com.eduardossampaio.toprepos.views.presenters
+package com.eduardossampaio.toprepos.features.list_repos.presenter
 
 import com.esampaio.core.models.Repo
 import com.eduardossampaio.toprepos.views.presenters.BasePresenter
 import io.reactivex.rxjava3.core.Observable
 
 
-interface ShowRepositoriesPresenter : com.eduardossampaio.toprepos.views.presenters.BasePresenter {
+interface ShowRepositoriesPresenter : BasePresenter {
 
     val onRepositoryClicked: Observable<Repo>
 

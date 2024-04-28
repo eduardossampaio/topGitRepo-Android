@@ -1,6 +1,6 @@
-package com.eduardossampaio.toprepos.views.presenters
+package com.eduardossampaio.toprepos.features.splash.presenter
 
-import com.esampaio.core.models.Repo
+import com.eduardossampaio.toprepos.views.presenters.BasePresenter
 import io.reactivex.rxjava3.core.Observable
 
 interface SplashPresenter : BasePresenter {

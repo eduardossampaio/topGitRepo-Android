@@ -1,7 +1,8 @@
-package com.eduardossampaio.toprepos.views.interactors
+package com.eduardossampaio.toprepos.features.list_repos.interactor
 
+import com.eduardossampaio.toprepos.views.interactors.BaseInteractor
 import com.eduardossampaio.toprepos.views.presenters.BasePresenter
-import com.eduardossampaio.toprepos.views.presenters.ShowRepositoriesPresenter
+import com.eduardossampaio.toprepos.features.list_repos.presenter.ShowRepositoriesPresenter
 import com.esampaio.core.models.Repo
 import com.esampaio.core.usecases.repositories.ShowRepositoriesInteractor
 import com.esampaio.core.usecases.repositories.ShowRepositoriesUseCase
@@ -12,7 +13,7 @@ interface ListRepositoriesInteractor : BaseInteractor {
 }
 
 class ListRepositoriesInteractorImpl(private val useCase: ShowRepositoriesUseCase) : ListRepositoriesInteractor, ShowRepositoriesInteractor{
-    private lateinit var presenter:ShowRepositoriesPresenter
+    private lateinit var presenter: ShowRepositoriesPresenter
 
     private val onPageChangedSubject =  PublishSubject.create<Int>()
     override val onPageChanged: Observable<Int> = onPageChangedSubject

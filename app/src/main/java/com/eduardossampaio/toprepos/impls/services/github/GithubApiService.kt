@@ -19,7 +19,6 @@ import retrofit2.converter.jackson.JacksonConverterFactory
 class GithubApiService : GitApiService {
     private var retrofit: Retrofit = Retrofit.Builder()
         .baseUrl("https://api.github.com/")
-//        .addConverterFactory(GsonConverterFactory.create())
         .addConverterFactory(JacksonConverterFactory.create())
         .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
         .build()
@@ -33,10 +32,6 @@ class GithubApiService : GitApiService {
                 item -> Repo(
             item.id!!.toLong(), item.name!!, item.description!!, item.owner!!.login!!,item.owner!!.avatarUrl!!,
             item.stargazersCount!!.toInt(),item.forksCount!!.toLong(), emptyList())
-
-//            val repo1 = Repo(1,"teste","tteste","teste",
-//                "teste",12,123, emptyList()
-//            )
 
           }}.toObservable()
     }

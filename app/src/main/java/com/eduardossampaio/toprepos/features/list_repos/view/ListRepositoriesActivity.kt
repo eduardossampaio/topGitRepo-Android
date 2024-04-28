@@ -1,4 +1,4 @@
-package com.eduardossampaio.toprepos.views.acitivties.list_repositories
+package com.eduardossampaio.toprepos.features.list_repos.view
 
 import android.os.Bundle
 import android.view.View
@@ -7,24 +7,18 @@ import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.eduardossampaio.toprepos.R
-import com.eduardossampaio.toprepos.appModule
-import com.eduardossampaio.toprepos.impls.services.github.GithubApiService
 import com.eduardossampaio.toprepos.views.custom.OnReachEndOfListListener
 import com.eduardossampaio.toprepos.views.custom.ScrollableRecyclerView
-import com.eduardossampaio.toprepos.views.interactors.ListRepositoriesInteractor
+import com.eduardossampaio.toprepos.features.list_repos.interactor.ListRepositoriesInteractor
 import com.esampaio.core.models.Repo
-import com.eduardossampaio.toprepos.views.presenters.ShowRepositoriesPresenter
-import com.esampaio.core.usecases.UseCase
-import com.esampaio.core.usecases.repositories.ShowRepositoriesUseCase
+import com.eduardossampaio.toprepos.features.list_repos.presenter.ShowRepositoriesPresenter
+import com.eduardossampaio.toprepos.features.list_repos.view.adapter.ListRepositoriesRecyclerViewAdapter
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.PublishSubject
 import org.koin.android.ext.android.inject
-import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.startKoin
 
 class ListRepositoriesActivity : AppCompatActivity(), ShowRepositoriesPresenter {
-    private val interactor:ListRepositoriesInteractor by inject()
+    private val interactor: ListRepositoriesInteractor by inject()
 
     private var onRepositoryClickedSubject =  PublishSubject.create<Repo>()
     private var onPageChangedSubject =  PublishSubject.create<Int>()
@@ -69,7 +63,9 @@ class ListRepositoriesActivity : AppCompatActivity(), ShowRepositoriesPresenter 
     }
     private fun setupViews(){
         hideLoading()
-        adapter = ListRepositoriesRecyclerViewAdapter(this)
+        adapter = ListRepositoriesRecyclerViewAdapter(this){
+            
+        }
         repositoryList.adapter = adapter
         repositoryList.layoutManager = LinearLayoutManager(this)
         repositoryList.onReachEndOfListListener = object :OnReachEndOfListListener {

@@ -6,11 +6,19 @@
     </style>
 
     <style name="ListItem">
-        <item name="android:padding">5dp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+
+<!--        android:focusable="true"-->
+<!--        android:clickable="true"-->
+<!--        android:foreground="?android:attr/selectableItemBackground"-->
+
     </style>
     <style name="AvatarImage" >
-        <item name="android:maxWidth">32dp</item>
-        <item name="android:maxHeight">32dp</item>
+        <item name="android:width">32dp</item>
+        <item name="android:height">32dp</item>
     </style>
 
     <style name="RepoName" >
@@ -24,19 +32,25 @@
        <item name="android:textSize">12sp</item>
         <item name="android:layout_marginTop">5dp</item>
         <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:paddingStart">12dp</item>
     </style>
 
     <style name="ListItemIcon">
         <item name="tint">?iconColorPrimary</item>
     </style>
 
+    <style name="RepoDescription">
+        <item name="android:textSize">12sp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">3</item>
+        <item name="android:layout_marginTop">10dp</item>
+    </style>
+
     <style name="Separator">
         <item name="android:background">?iconColorPrimary</item>
         <item name="android:alpha">0.5</item>
-        <item name="android:layout_marginLeft">10dp</item>
-        <item name="android:layout_marginRight">10dp</item>
-        <item name="android:layout_marginTop">10dp</item>
-        <item name="android:layout_marginBottom">10dp</item>
+
+        <item name="android:layout_margin">10dp</item>
     </style>
 
 </resources>

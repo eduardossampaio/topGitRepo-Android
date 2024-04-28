@@ -51,6 +51,8 @@ dependencies {
 //    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.17.+")
     implementation("com.squareup.picasso:picasso:2.8")
+    //views
+    implementation ("de.hdodenhof:circleimageview:3.1.0")
 
     // Koin
     implementation ("io.insert-koin:koin-android:3.5.3")
