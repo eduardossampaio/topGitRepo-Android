@@ -3,28 +3,50 @@ package com.eduardossampaio.toprepos.impls.services.github
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 
-//import com.fasterxml.jackson.annotation.JsonProperty
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class GithubListRepoResponse(
     @JsonProperty("total_count")
     val totalCount: Long?,
     @JsonProperty("incomplete_results")
     val incompleteResults: Boolean?,
-    val items: List<Item>?,
+    @JsonProperty("items")
+    val items: List<Item>,
 )
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Item(
+    @JsonProperty("id")
     val id: Long?,
-//    @JsonProperty("node_id")
-//    val nodeId: String,
+
+    @JsonProperty("node_id")
+    val nodeId: String?,
+
+    @JsonProperty("name")
     val name: String?,
-//    @JsonProperty("full_name")
-//    val fullName: String,
-//    val private: Boolean,
-//    val owner: Owner?,
-//    @JsonProperty("html_url")
-//    val htmlUrl: String,
+
+    @JsonProperty("full_name")
+    val fullName: String?,
+
+    @JsonProperty("private")
+    val isPrivate: Boolean?,
+
+    @JsonProperty("owner")
+    val owner: Owner?,
+
+    @JsonProperty("html_url")
+    val htmlUrl: String,
+
+    @JsonProperty("description")
     val description: String?,
+
+    @JsonProperty("stargazers_count")
+    val stargazersCount: Long?,
+
+    @JsonProperty("forks_count")
+    val forksCount: Long?,
+
+    /*
 //    val fork: Boolean,
 //    val url: String,
 //    @JsonProperty("forks_url")
@@ -115,8 +137,7 @@ data class Item(
 //    val svnUrl: String,
 //    val homepage: String,
 //    val size: Long,
-    @JsonProperty("stargazers_count")
-    val stargazersCount: Long?,
+
 //    @JsonProperty("watchers_count")
 //    val watchersCount: Long,
 //    val language: String,
@@ -132,8 +153,7 @@ data class Item(
 //    val hasPages: Boolean,
 //    @JsonProperty("has_discussions")
 //    val hasDiscussions: Boolean,
-    @JsonProperty("forks_count")
-    val forksCount: Long?,
+
 //    @JsonProperty("mirror_url")
 //    val mirrorUrl: Any?,
 //    val archived: Boolean,
@@ -156,10 +176,16 @@ data class Item(
 //    @JsonProperty("default_branch")
 //    val defaultBranch: String,
 //    val score: Double,
+
+*/
+
 )
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Owner(
+    @JsonProperty("login")
     val login: String?,
+    @JsonProperty("id")
     val id: Long?,
 //    @JsonProperty("node_id")
 //    val nodeId: String,

@@ -1,12 +1,15 @@
 package com.eduardossampaio.toprepos.impls.services.github
 
 
+import android.util.Log
 import com.esampaio.core.models.PullRequest
 import com.esampaio.core.models.Repo
 import com.esampaio.core.services.gitService.GitApiService
 import com.esampaio.core.services.gitService.models.SearchQuery
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.kotlin.toObservable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 //import retrofit2.converter.gson.GsonConverterFactory
@@ -22,6 +25,22 @@ class GithubApiService : GitApiService {
         .build()
 
     override fun listAllRepositories(page: Int, searchQuery: SearchQuery?): Observable<List<Repo>> {
+                val service =  this.retrofit.create(GithubApiServiceRetrofit::class.java)
+
+
+        val observable = service.listRepos("language:Java",searchQuery?.sortBy.toString(),page);
+        return observable.map { it.items!!.map {
+                item -> Repo(
+            item.id!!.toLong(), item.name!!, item.description!!, item.owner!!.login!!,item.owner!!.avatarUrl!!,
+            item.stargazersCount!!.toInt(),item.forksCount!!.toLong(), emptyList())
+
+//            val repo1 = Repo(1,"teste","tteste","teste",
+//                "teste",12,123, emptyList()
+//            )
+
+          }}.toObservable()
+    }
+     fun listAllRepositories_test(page: Int, searchQuery: SearchQuery?): Observable<List<Repo>> {
 
         val repo1 = Repo(
             132464395
@@ -67,6 +86,22 @@ class GithubApiService : GitApiService {
 
         //return listOf(listOf(repo1,repo2,repo3,repo4)).toObservable()
         return  Observable.just<List<Repo>>(listOf(repo1,repo2,repo3,repo4,repo1,repo2,repo3,repo4,repo1,repo2,repo3,repo4))
+    }
+
+    fun teste(){
+        val service =  this.retrofit.create(GithubApiServiceRetrofit::class.java)
+        val obs = service.listRepos("language:Java","stars",1)
+       .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                /* onNext = */ {
+                    Log.d("SplashActivity", "list all repos")
+                },
+                /* onError = */ {
+                    it.printStackTrace()
+                    it.message?.let { it1 -> Log.e("SplashActivity", it1) }
+                }
+            )
     }
 
 

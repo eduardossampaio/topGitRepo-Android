@@ -16,25 +16,24 @@ class ScrollableRecyclerView : RecyclerView{
     }
 
     constructor(context: Context, attrs: AttributeSet?):super(context,attrs) {
-
     }
 
     constructor(context: Context, attrs: AttributeSet?,defStyleAttr:Int):super(context,attrs,defStyleAttr) {
-
     }
 
     override fun onScrolled(dx: Int, dy: Int) {
-
+        super.onScrolled(dx, dy)
         if (dy > 0) {
             adapter.let{adapter ->
                 if(layoutManager is LinearLayoutManager &&  (layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition() == adapter?.itemCount!! - 1 ){
                     onReachEndOfListListener?.onReachEnd();
+
                 }
             }
 
 
         }
-        super.onScrolled(dx, dy)
+
     }
 
 }

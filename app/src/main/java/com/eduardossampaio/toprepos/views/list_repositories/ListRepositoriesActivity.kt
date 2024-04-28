@@ -32,7 +32,7 @@ class ListRepositoriesActivity : AppCompatActivity(), ShowRepositoriesPresenter 
     lateinit var repositoryList: ScrollableRecyclerView
     lateinit var adapter: ListRepositoriesRecyclerViewAdapter
 
-    private var currentPage = 0
+    private var currentPage = 1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_repositories)
@@ -68,7 +68,8 @@ class ListRepositoriesActivity : AppCompatActivity(), ShowRepositoriesPresenter 
         repositoryList.layoutManager = LinearLayoutManager(this)
         repositoryList.onReachEndOfListListener = object :OnReachEndOfListListener {
             override fun onReachEnd() {
-                onPageChangedSubject.onNext(currentPage + 1);
+                currentPage++
+                onPageChangedSubject.onNext(currentPage);
             }
         }
     }

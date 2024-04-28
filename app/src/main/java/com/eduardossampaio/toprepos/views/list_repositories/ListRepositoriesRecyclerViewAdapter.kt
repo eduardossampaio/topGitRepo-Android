@@ -47,6 +47,10 @@ class ListRepositoriesRecyclerViewAdapter(private val context:Context): ListAdap
         submitList(currentList)
         items = currentList
 
+//        items.addAll(newItems)
+//        submitList(items)
+
+
     }
 
     inner class ListItemViewHolder(itemView: View) : ViewHolder(itemView) {

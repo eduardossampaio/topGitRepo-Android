@@ -4,12 +4,17 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.eduardossampaio.toprepos.R
+import com.eduardossampaio.toprepos.impls.services.github.GithubApiService
 import com.eduardossampaio.toprepos.views.list_repositories.ListRepositoriesActivity
 
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+
+//        val githuService = GithubApiService()
+//
+//        githuService.teste();
 
         val intent = Intent(this, ListRepositoriesActivity::class.java)
         startActivity(intent);
