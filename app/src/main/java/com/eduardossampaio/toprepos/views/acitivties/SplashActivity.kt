@@ -33,7 +33,7 @@ class SplashActivity : AppCompatActivity(), SplashPresenter {
             androidContext(this@SplashActivity)
             modules(appModule)
         }
-        
+
         interactor.bind(this)
         interactor.start()
 

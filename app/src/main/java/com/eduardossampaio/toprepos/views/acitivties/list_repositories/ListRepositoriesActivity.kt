@@ -7,17 +7,24 @@ import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.eduardossampaio.toprepos.R
+import com.eduardossampaio.toprepos.appModule
 import com.eduardossampaio.toprepos.impls.services.github.GithubApiService
 import com.eduardossampaio.toprepos.views.custom.OnReachEndOfListListener
 import com.eduardossampaio.toprepos.views.custom.ScrollableRecyclerView
+import com.eduardossampaio.toprepos.views.interactors.ListRepositoriesInteractor
 import com.esampaio.core.models.Repo
 import com.eduardossampaio.toprepos.views.presenters.ShowRepositoriesPresenter
 import com.esampaio.core.usecases.UseCase
 import com.esampaio.core.usecases.repositories.ShowRepositoriesUseCase
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.PublishSubject
+import org.koin.android.ext.android.inject
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
 
 class ListRepositoriesActivity : AppCompatActivity(), ShowRepositoriesPresenter {
+    private val interactor:ListRepositoriesInteractor by inject()
 
     private var onRepositoryClickedSubject =  PublishSubject.create<Repo>()
     private var onPageChangedSubject =  PublishSubject.create<Int>()
@@ -25,8 +32,6 @@ class ListRepositoriesActivity : AppCompatActivity(), ShowRepositoriesPresenter 
     override val onRepositoryClicked: Observable<Repo> = onRepositoryClickedSubject
     override val onPageChanged: Observable<Int> = onPageChangedSubject
 
-    //temp
-    lateinit var useCase: UseCase;
 
     lateinit var loading:ProgressBar
     lateinit var repositoryList: ScrollableRecyclerView
@@ -38,23 +43,24 @@ class ListRepositoriesActivity : AppCompatActivity(), ShowRepositoriesPresenter 
         setContentView(R.layout.activity_list_repositories)
         setTitle(R.string.list_repo_title)
 
-
         bindViews();
         setupViews();
 
+//        startKoin{
+//            androidLogger()
+//            androidContext(this@ListRepositoriesActivity)
+//            modules(appModule)
+//        }
 
-        //temp
-        useCase = ShowRepositoriesUseCase();
+        interactor.bind(this)
+        interactor.start()
 
-        //(useCase as ShowRepositoriesUseCase).showRepositoriesPresenter = this
-        (useCase as ShowRepositoriesUseCase).gitApiService = GithubApiService()
 
-        //useCase.start()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        useCase.finish()
+
     }
 
     private fun bindViews(){

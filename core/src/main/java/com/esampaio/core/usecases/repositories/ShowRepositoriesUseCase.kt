@@ -10,10 +10,9 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class ShowRepositoriesUseCase : UseCase{
+class ShowRepositoriesUseCase(private var gitApiService: GitApiService) : UseCase{
 
-    lateinit var gitApiService: GitApiService
-    lateinit var showRepositoriesPresenter: ShowRepositoriesInteractor
+    lateinit var showRepositoriesInteractor: ShowRepositoriesInteractor
 
     private var onPageChancedSubscriber: Disposable? = null
 
@@ -30,7 +29,7 @@ class ShowRepositoriesUseCase : UseCase{
     private fun setupObservers(){
 
         onPageChancedSubscriber =
-            showRepositoriesPresenter.onPageChanged.observeOn(AndroidSchedulers.mainThread())
+            showRepositoriesInteractor.onPageChanged.observeOn(AndroidSchedulers.mainThread())
                 .subscribe {page ->
                     fetchRepositories(page)
                 }
@@ -43,12 +42,12 @@ class ShowRepositoriesUseCase : UseCase{
             .subscribe(
                 /* onNext = */ {repos ->
                     Log.d("SplashActivity", "list all repos")
-                    showRepositoriesPresenter.showRepositories(repos)
+                    showRepositoriesInteractor.showRepositories(repos)
                 },
                 /* onError = */ {
                     it.printStackTrace()
                     it.message?.let { it1 -> Log.e("SplashActivity", it1) }
-                    showRepositoriesPresenter.notifyError(it)
+                    showRepositoriesInteractor.notifyError(it)
                 }
             )
         //subscribe.dispose()
