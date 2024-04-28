@@ -43,6 +43,8 @@ android {
 
 dependencies {
 
+    implementation(project(":core"))
+
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
@@ -62,15 +64,23 @@ dependencies {
     implementation ("com.airbnb.android:lottie:$lottieVersion")
     // Koin
     implementation ("io.insert-koin:koin-android:3.5.3")
+//    implementation("androidx.activity:activity:1.8.0")
 
     // Koin Tests
     testImplementation ("io.insert-koin:koin-test:3.5.3")
     testImplementation ("io.insert-koin:koin-test-junit4:3.5.3")
-
-    implementation(project(":core"))
-
-
     testImplementation("junit:junit:4.13.2")
+    testImplementation("org.mockito:mockito-core:5.7.0")
+
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.2.1")
+
+
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation("androidx.test.ext:junit-ktx:1.1.5")
+    androidTestImplementation("org.mockito:mockito-core:5.7.0")
+    androidTestImplementation("org.mockito.kotlin:mockito-kotlin:5.2.1")
+    androidTestImplementation("org.mockito:mockito-android:2.28.2")
+//    androidTestImplementation("org.mockito:mockito-inline:2.28.2")
+
 }

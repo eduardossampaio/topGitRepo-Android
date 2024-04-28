@@ -17,9 +17,12 @@ import com.eduardossampaio.toprepos.features.list_repos.view.adapter.ListReposit
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.PublishSubject
 import org.koin.android.ext.android.inject
+import org.koin.core.parameter.parametersOf
 
 class ListRepositoriesActivity : AppCompatActivity(), ShowRepositoriesPresenter {
-    private val interactor: ListRepositoriesInteractor by inject()
+    private val interactor: ListRepositoriesInteractor by inject { parametersOf(this) }
+
+//    private val interactor: ListRepositoriesInteractor by inject()
 
     private var onRepositoryClickedSubject =  PublishSubject.create<Repo>()
     private var onPageChangedSubject =  PublishSubject.create<Int>()
@@ -36,10 +39,16 @@ class ListRepositoriesActivity : AppCompatActivity(), ShowRepositoriesPresenter 
         views = ActivityListRepositoriesBinding.inflate(layoutInflater)
         setContentView(views.root)
 
+
+
         setupViews();
 
         interactor.bind(this)
         interactor.start()
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 
     override fun onDestroy() {

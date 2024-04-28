@@ -1,5 +1,6 @@
 package com.eduardossampaio.toprepos
 
+import android.content.Context
 import com.eduardossampaio.toprepos.flow.Flow
 import com.eduardossampaio.toprepos.flow.github.GitRepositoriesFlow
 import com.eduardossampaio.toprepos.impls.services.github.GithubApiService
@@ -17,8 +18,14 @@ val appModule = module {
     factory<GitApiService> { GithubApiService()  }
     factory { ShowRepositoriesUseCase(get<GitApiService>()) }
     factory { GitRepositoriesFlow() as Flow }
-    factory { SplashInteractorImpl(context = get()) as SplashInteractor }
-    factory { ListRepositoriesInteractorImpl(get<ShowRepositoriesUseCase>()) as ListRepositoriesInteractor }
+    factory<SplashInteractor> { (activityContext: Context) -> SplashInteractorImpl(activityContext )  }
+//    factory<ListRepositoriesInteractor> { ListRepositoriesInteractorImpl(get<ShowRepositoriesUseCase>()) }
+    factory<ListRepositoriesInteractor> { (activityContext: Context) -> ListRepositoriesInteractorImpl(activityContext,get<ShowRepositoriesUseCase>()) }
+
+
+//    factory { (activityContext: Context) ->
+//        MyClass(activityContext)
+//    }
 }
 
 

@@ -25,7 +25,6 @@ class SplashInteractorImpl(private val context: Context) : SplashInteractor {
     }
 
     override fun start() {
-        var i = 0;
          subscribe = splashPresenter.onSplashPresenterFinished.subscribe {
             flow.start(context)
         }

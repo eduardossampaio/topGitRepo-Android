@@ -15,16 +15,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TopRepos"
         tools:targetApi="31">
-
+        <activity
+            android:name=".features.detail_repo.DetailRepoActivity"
+            android:exported="false" />
         <activity
             android:name=".features.list_repos.view.ListRepositoriesActivity"
             android:exported="false" />
-
         <activity
-            android:theme="@style/Theme.TopRepos.NoBar"
-            android:noHistory="true"
             android:name=".features.splash.view.SplashActivity"
-            android:exported="true">
+            android:exported="true"
+            android:noHistory="true"
+            android:theme="@style/Theme.TopRepos.NoBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
