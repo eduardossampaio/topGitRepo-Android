@@ -9,18 +9,14 @@ import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface GithubApiServiceRetrofit {
 
       @GET("search/repositories")
       fun listRepos(@Query("q") searchParams:String,@Query("sort") sort:String, @Query("page") page:Int):Flowable<GithubListRepoResponse>
+
+      @GET("repos/{create_by}/{repo_name}/pulls")
+      fun listPullRequests(@Path("create_by") createdBy:String,@Path("repo_name")repoName:String):Flowable<List<GithubListPullRequestsResponse>>
 }
-
-
-//        fun getChores() : Call<GetChoresDto>
-//
-//        @POST("chores")
-//        fun addChore(@Body addChoreDto: AddChoreDto) : Call<ChoreId>
-//
-//}

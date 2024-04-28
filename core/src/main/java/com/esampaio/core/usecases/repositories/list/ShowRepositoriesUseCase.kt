@@ -1,4 +1,4 @@
-package com.esampaio.core.usecases.repositories
+package com.esampaio.core.usecases.repositories.list
 
 import android.util.Log
 import com.esampaio.core.services.gitService.GitApiService
@@ -10,14 +10,14 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-open class ShowRepositoriesUseCase(private var gitApiService: GitApiService) : UseCase{
+open class ShowRepositoriesUseCase(private var gitApiService: GitApiService) : UseCase<Unit?>{
 
     lateinit var showRepositoriesInteractor: ShowRepositoriesInteractor
 
     private var onPageChancedSubscriber: Disposable? = null
 
     private val searchQuery = SearchQuery(Languages.Java,SortType.stars);
-    override fun start() {
+    override fun start(params: Unit?) {
         setupObservers()
         fetchRepositories(0)
     }

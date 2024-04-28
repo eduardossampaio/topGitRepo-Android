@@ -18,7 +18,7 @@ class GitRepositoriesFlowImpl: GitRepositoriesFlow{
 
     override fun detailRepo(context: Context,repo: Repo) {
         val intent = Intent(context, DetailRepoActivity::class.java)
-        intent.putExtra("example",RepoDTO(repo))
+        intent.putExtra(DetailRepoActivity.PARAM_REPO,RepoDTO(repo))
         context.startActivity(intent)
     }
 }

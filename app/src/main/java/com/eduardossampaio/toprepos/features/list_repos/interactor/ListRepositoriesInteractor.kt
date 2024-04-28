@@ -5,18 +5,19 @@ import com.eduardossampaio.toprepos.views.presenters.BasePresenter
 import com.eduardossampaio.toprepos.features.list_repos.presenter.ShowRepositoriesPresenter
 import com.eduardossampaio.toprepos.flow.github.GitRepositoriesFlow
 import com.esampaio.core.models.Repo
-import com.esampaio.core.usecases.repositories.ShowRepositoriesInteractor
-import com.esampaio.core.usecases.repositories.ShowRepositoriesUseCase
+import com.esampaio.core.usecases.repositories.list.ShowRepositoriesInteractor
+import com.esampaio.core.usecases.repositories.list.ShowRepositoriesUseCase
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.subjects.PublishSubject
 
-interface ListRepositoriesInteractor : BaseInteractor {
+interface ListRepositoriesInteractor : BaseInteractor<Unit?> {
 }
 
 class ListRepositoriesInteractorImpl(
     private val flow: GitRepositoriesFlow,
-    private val useCase: ShowRepositoriesUseCase) : ListRepositoriesInteractor, ShowRepositoriesInteractor{
+    private val useCase: ShowRepositoriesUseCase
+) : ListRepositoriesInteractor, ShowRepositoriesInteractor {
 
     private lateinit var presenter: ShowRepositoriesPresenter
 
@@ -30,7 +31,7 @@ class ListRepositoriesInteractorImpl(
         this.presenter = presenter as ShowRepositoriesPresenter
     }
 
-    override fun start() {
+    override fun start(params:Unit?) {
         presenter.showLoading()
         onPageChangeDisposable = presenter.onPageChanged.subscribe {page ->
             onPageChangedSubject.onNext(page);
@@ -39,7 +40,7 @@ class ListRepositoriesInteractorImpl(
             flow.detailRepo(presenter.getContext(), repo)
         }
         useCase.showRepositoriesInteractor = this
-        useCase.start();
+        useCase.start(null);
     }
 
     override fun destroy() {

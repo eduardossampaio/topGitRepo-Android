@@ -1,4 +1,4 @@
-package com.esampaio.core.usecases.repositories
+package com.esampaio.core.usecases.repositories.list
 
 import com.esampaio.core.models.Repo
 import com.esampaio.core.usecases.UseCaseInteractor

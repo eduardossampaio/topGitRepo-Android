@@ -2,7 +2,6 @@ package com.eduardossampaio.toprepos.features.splash.interactor
 
 import android.content.Context
 import com.eduardossampaio.toprepos.features.splash.presenter.SplashPresenter
-import com.eduardossampaio.toprepos.flow.Flow
 import com.eduardossampaio.toprepos.flow.github.GitRepositoriesFlow
 import com.eduardossampaio.toprepos.views.presenters.BasePresenter
 import com.eduardossampaio.toprepos.views.interactors.BaseInteractor
@@ -11,7 +10,7 @@ import io.reactivex.rxjava3.disposables.Disposable
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-interface SplashInteractor : BaseInteractor, KoinComponent{
+interface SplashInteractor : BaseInteractor<Unit?>, KoinComponent{
 }
 
 class SplashInteractorImpl(private val context: Context) : SplashInteractor {
@@ -25,7 +24,7 @@ class SplashInteractorImpl(private val context: Context) : SplashInteractor {
        splashPresenter = presenter as SplashPresenter
     }
 
-    override fun start() {
+    override fun start(initParams:Unit?) {
          subscribe = splashPresenter.onSplashPresenterFinished.subscribe {
             flow.start(context)
         }
