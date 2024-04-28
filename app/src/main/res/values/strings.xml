@@ -1,5 +1,12 @@
 <resources>
-    <string name="app_name">TopRepos</string>
+    <string name="app_name">Top Repositories</string>
     <string name="list_repo_title">Top Java Repositories</string>
     <string name="lorem_ipsum">Sed condimentum diam orci, eget condimentum ipsum convallis quis. Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt, explicabo. Nemo enim ipsam voluptatem, quia voluptas sit, aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos, qui ratione voluptatem sequi nesciunt, neque porro quisquam est, qui dolorem ipsum, quia dolor sit amet consectetur adipiscing velit, sed quia non numquam do eius modi tempora inci[di]dunt, ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?</string>
+
+    <string name="accessibility_splash_logo">Cute Github cat waving</string>
+    <string name="accessibility_loading">Loading</string>
+    <string name="accessibility_repository_name">Repository %1$s</string>
+    <string name="accessibility_repository_created_by">Created by %1$s</string>
+    <string name="accessibility_repository_stars_count">%1$d stars</string>
+    <string name="accessibility_repository_fork_count">%1$d forks</string>
 </resources>

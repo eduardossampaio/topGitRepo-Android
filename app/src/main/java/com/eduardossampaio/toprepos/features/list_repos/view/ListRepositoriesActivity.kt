@@ -44,7 +44,7 @@ class ListRepositoriesActivity : AppCompatActivity(), ShowRepositoriesPresenter 
 
     override fun onDestroy() {
         super.onDestroy()
-
+        interactor.destroy()
     }
 
     private fun setupViews(){

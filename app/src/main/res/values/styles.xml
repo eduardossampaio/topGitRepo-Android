@@ -10,12 +10,8 @@
         <item name="android:focusable">true</item>
         <item name="android:clickable">true</item>
         <item name="android:foreground">?attr/selectableItemBackground</item>
-
-<!--        android:focusable="true"-->
-<!--        android:clickable="true"-->
-<!--        android:foreground="?android:attr/selectableItemBackground"-->
-
     </style>
+
     <style name="AvatarImage" >
         <item name="android:width">32dp</item>
         <item name="android:height">32dp</item>
@@ -52,5 +48,13 @@
 
         <item name="android:layout_margin">10dp</item>
     </style>
+
+<!--    <style name="Theme.TopRepos.NoActionBar" parent="Theme.TopRepos">-->
+<!--        <item name="android:windowActionBar">false</item>-->
+<!--        <item name="android:windowNoTitle">true</item>-->
+
+<!--        <item name="windowActionBar">false</item>-->
+<!--        <item name="windowNoTitle">true</item>-->
+<!--    </style>-->
 
 </resources>

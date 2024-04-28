@@ -7,6 +7,7 @@ import com.esampaio.core.models.Repo
 import com.esampaio.core.usecases.repositories.ShowRepositoriesInteractor
 import com.esampaio.core.usecases.repositories.ShowRepositoriesUseCase
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.subjects.PublishSubject
 
 interface ListRepositoriesInteractor : BaseInteractor {
@@ -17,6 +18,7 @@ class ListRepositoriesInteractorImpl(private val useCase: ShowRepositoriesUseCas
 
     private val onPageChangedSubject =  PublishSubject.create<Int>()
     override val onPageChanged: Observable<Int> = onPageChangedSubject
+    private var onPageChangeDisposable:Disposable? = null
 
     override fun bind(presenter: BasePresenter) {
         this.presenter = presenter as ShowRepositoriesPresenter
@@ -24,11 +26,15 @@ class ListRepositoriesInteractorImpl(private val useCase: ShowRepositoriesUseCas
 
     override fun start() {
         presenter.showLoading()
-        val onPageChangeDisposable = presenter.onPageChanged.subscribe {page ->
+        onPageChangeDisposable = presenter.onPageChanged.subscribe {page ->
             onPageChangedSubject.onNext(page);
         }
         useCase.showRepositoriesInteractor = this
         useCase.start();
+    }
+
+    override fun destroy() {
+        onPageChangeDisposable?.dispose()
     }
 
     override fun showRepositories(repositories: List<Repo>) {

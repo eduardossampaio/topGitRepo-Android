@@ -33,7 +33,7 @@ class SplashActivity : AppCompatActivity(), SplashPresenter {
         interactor.bind(this)
         interactor.start()
 
-        Timer().schedule(timerTask {startFlow()}, 3000)
+        Timer().schedule(timerTask {startFlow()}, 5000)
     }
 
     private fun startFlow(){

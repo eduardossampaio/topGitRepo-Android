@@ -31,4 +31,8 @@ class SplashInteractorImpl(private val context: Context) : SplashInteractor {
         }
     }
 
+    override fun destroy() {
+
+    }
+
 }

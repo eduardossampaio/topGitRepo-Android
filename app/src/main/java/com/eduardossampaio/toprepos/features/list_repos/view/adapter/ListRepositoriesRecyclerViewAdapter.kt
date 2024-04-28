@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.eduardossampaio.toprepos.R
 import com.eduardossampaio.toprepos.databinding.RepositoryListItemBinding
 import com.esampaio.core.models.Repo
 import com.squareup.picasso.Picasso
@@ -63,6 +64,18 @@ class ListRepositoriesRecyclerViewAdapter(private val context:Context, private v
             itemView.setOnClickListener {
                 onItemClicked(item)
             }
+
+            bindAccessibility(item)
+        }
+
+        private fun bindAccessibility(item:Repo){
+            val r = context.resources
+            //ordem trocada para facilitar a leitura
+            views.userName.contentDescription = r.getString(R.string.accessibility_repository_name,item.name)//"Repositório ${item.name}"
+            views.repoName.contentDescription = r.getString(R.string.accessibility_repository_created_by,item.authorName)//"Criado por ${item.authorName}"
+
+            views.starCount.contentDescription = r.getString(R.string.accessibility_repository_stars_count,item.starCount)
+            views.forkCount.contentDescription = r.getString(R.string.accessibility_repository_fork_count,item.forkCount)
         }
     }
 

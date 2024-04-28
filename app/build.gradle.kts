@@ -3,6 +3,8 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 
+val lottieVersion = "3.4.0"
+
 android {
     namespace = "com.eduardossampaio.toprepos"
     compileSdk = 33
@@ -57,6 +59,7 @@ dependencies {
     //views
     implementation ("de.hdodenhof:circleimageview:3.1.0")
 
+    implementation ("com.airbnb.android:lottie:$lottieVersion")
     // Koin
     implementation ("io.insert-koin:koin-android:3.5.3")
 
@@ -65,8 +68,7 @@ dependencies {
     testImplementation ("io.insert-koin:koin-test-junit4:3.5.3")
 
     implementation(project(":core"))
-//    implementation("androidx.activity:activity:1.8.0")
-//    implementation("implementation 'com.google.code.gson:gson:2.10.1'")
+
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

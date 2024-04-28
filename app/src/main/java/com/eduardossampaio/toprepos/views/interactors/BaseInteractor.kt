@@ -6,4 +6,6 @@ interface BaseInteractor {
     fun bind(presenter: BasePresenter)
 
     fun start();
+
+    fun destroy();
 }

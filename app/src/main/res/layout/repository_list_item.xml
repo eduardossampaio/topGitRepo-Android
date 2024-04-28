@@ -12,6 +12,7 @@
         android:layout_height="wrap_content">
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:contentDescription="@null"
             android:id="@+id/userProfile"
             style="@style/AvatarImage"
             android:layout_width="64dp"
@@ -66,6 +67,7 @@
 
 
             <ImageView
+                android:contentDescription="@null"
                 android:id="@+id/icon_star"
                 style="@style/ListItemIcon"
                 android:layout_width="32dp"
@@ -90,7 +92,7 @@
                 style="@style/ListItemIcon"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:contentDescription="TODO"
+                android:contentDescription="@null"
                 android:src="@drawable/icon_git_fork"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/fork_count"
