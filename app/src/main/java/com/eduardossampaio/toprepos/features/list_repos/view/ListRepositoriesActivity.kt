@@ -1,5 +1,6 @@
 package com.eduardossampaio.toprepos.features.list_repos.view
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
@@ -20,9 +21,8 @@ import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
 
 class ListRepositoriesActivity : AppCompatActivity(), ShowRepositoriesPresenter {
-    private val interactor: ListRepositoriesInteractor by inject { parametersOf(this) }
+    private val interactor: ListRepositoriesInteractor by inject ()
 
-//    private val interactor: ListRepositoriesInteractor by inject()
 
     private var onRepositoryClickedSubject =  PublishSubject.create<Repo>()
     private var onPageChangedSubject =  PublishSubject.create<Int>()
@@ -38,8 +38,6 @@ class ListRepositoriesActivity : AppCompatActivity(), ShowRepositoriesPresenter 
         super.onCreate(savedInstanceState)
         views = ActivityListRepositoriesBinding.inflate(layoutInflater)
         setContentView(views.root)
-
-
 
         setupViews();
 
@@ -59,8 +57,8 @@ class ListRepositoriesActivity : AppCompatActivity(), ShowRepositoriesPresenter 
     private fun setupViews(){
         setTitle(R.string.list_repo_title)
         hideLoading()
-        adapter = ListRepositoriesRecyclerViewAdapter(this){
-
+        adapter = ListRepositoriesRecyclerViewAdapter(this){repo ->
+            onRepositoryClickedSubject.onNext(repo)
         }
         views.repoList.adapter = adapter
         views.repoList.layoutManager = LinearLayoutManager(this)
@@ -87,6 +85,10 @@ class ListRepositoriesActivity : AppCompatActivity(), ShowRepositoriesPresenter 
 
     override fun showError(error: Throwable) {
 
+    }
+
+    override fun getContext(): Context {
+        return this;
     }
 
 }

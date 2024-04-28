@@ -1,8 +1,8 @@
 package com.esampaio.core.usecases
 
-interface UseCase {
+interface UseCase<T> {
 
-    fun start();
+    fun <T> start(params:T);
 
     fun finish();
 }

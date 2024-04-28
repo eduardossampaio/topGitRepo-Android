@@ -1,6 +1,7 @@
 package com.eduardossampaio.toprepos.features.splash.view
 
 
+import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.airbnb.lottie.LottieAnimationView
@@ -27,41 +28,19 @@ class SplashActivity : AppCompatActivity(), SplashPresenter {
     override val onSplashPresenterFinished: Observable<Any>  = onSplashPresenterFinishedPublisher
     private val interactor: SplashInteractor by inject {parametersOf(this)}
 
-    lateinit var animationView:LottieAnimationView
+    private lateinit var animationView:LottieAnimationView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
         animationView = findViewById<LottieAnimationView>(R.id.loading)
-//        stopKoin()
-//        startKoin{
-//            androidLogger()
-//            androidContext(this@SplashActivity)
-//            modules(appModule)
-//        }
-
 
         interactor.bind(this)
         interactor.start()
-//        setupLottieAnimation()
 
         Timer().schedule(timerTask {startFlow()}, 5000)
     }
 
-    private fun setupLottieAnimation(){
-        val animationView = findViewById<LottieAnimationView>(R.id.loading)
-
-        val drawable = LottieDrawable()
-
-        LottieComposition.Factory.fromAssetFileName(
-            this, "github_splash.json"
-        ) { composition: LottieComposition? ->
-            drawable.setComposition(composition)
-            drawable.playAnimation()
-            drawable.setScale(3f)
-            animationView.setImageDrawable(drawable)
-        }
-    }
 
     override fun onResume() {
         super.onResume()
@@ -84,5 +63,8 @@ class SplashActivity : AppCompatActivity(), SplashPresenter {
 
     override fun showError(error: Throwable) {
 
+    }
+    override fun getContext(): Context {
+        return this;
     }
 }

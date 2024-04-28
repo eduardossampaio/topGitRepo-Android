@@ -16,7 +16,7 @@
         android:theme="@style/Theme.TopRepos"
         tools:targetApi="31">
         <activity
-            android:name=".features.detail_repo.DetailRepoActivity"
+            android:name=".features.detail_repo.view.DetailRepoActivity"
             android:exported="false" />
         <activity
             android:name=".features.list_repos.view.ListRepositoriesActivity"

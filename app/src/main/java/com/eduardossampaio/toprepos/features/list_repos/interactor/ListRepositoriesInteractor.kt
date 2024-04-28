@@ -1,11 +1,9 @@
 package com.eduardossampaio.toprepos.features.list_repos.interactor
 
-import android.content.Context
-import android.content.Intent
-import com.eduardossampaio.toprepos.features.detail_repo.DetailRepoActivity
 import com.eduardossampaio.toprepos.views.interactors.BaseInteractor
 import com.eduardossampaio.toprepos.views.presenters.BasePresenter
 import com.eduardossampaio.toprepos.features.list_repos.presenter.ShowRepositoriesPresenter
+import com.eduardossampaio.toprepos.flow.github.GitRepositoriesFlow
 import com.esampaio.core.models.Repo
 import com.esampaio.core.usecases.repositories.ShowRepositoriesInteractor
 import com.esampaio.core.usecases.repositories.ShowRepositoriesUseCase
@@ -17,7 +15,7 @@ interface ListRepositoriesInteractor : BaseInteractor {
 }
 
 class ListRepositoriesInteractorImpl(
-    private val context: Context,
+    private val flow: GitRepositoriesFlow,
     private val useCase: ShowRepositoriesUseCase) : ListRepositoriesInteractor, ShowRepositoriesInteractor{
 
     private lateinit var presenter: ShowRepositoriesPresenter
@@ -38,8 +36,7 @@ class ListRepositoriesInteractorImpl(
             onPageChangedSubject.onNext(page);
         }
         onRepositoryDisposable = presenter.onRepositoryClicked.subscribe { repo ->
-//            val intent = Intent(context,DetailRepoActivity::class.java)
-//            context.startActivity(intent)
+            flow.detailRepo(presenter.getContext(), repo)
         }
         useCase.showRepositoriesInteractor = this
         useCase.start();
@@ -47,6 +44,7 @@ class ListRepositoriesInteractorImpl(
 
     override fun destroy() {
         onPageChangeDisposable?.dispose()
+        onRepositoryDisposable?.dispose()
     }
 
     override fun showRepositories(repositories: List<Repo>) {

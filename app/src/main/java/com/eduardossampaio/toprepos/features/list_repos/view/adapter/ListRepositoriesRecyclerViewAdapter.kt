@@ -61,7 +61,7 @@ class ListRepositoriesRecyclerViewAdapter(private val context:Context, private v
 
             Picasso.get().load(item.authorProfilePictureUrl).into(views.userProfile);
 
-            itemView.setOnClickListener {
+            views.content.setOnClickListener {
                 onItemClicked(item)
             }
 
