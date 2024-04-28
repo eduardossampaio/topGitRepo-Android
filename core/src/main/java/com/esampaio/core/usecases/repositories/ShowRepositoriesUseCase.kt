@@ -1,7 +1,6 @@
 package com.esampaio.core.usecases.repositories
 
 import android.util.Log
-import com.esampaio.core.presenters.repositories.ShowRepositoriesPresenter
 import com.esampaio.core.services.gitService.GitApiService
 import com.esampaio.core.services.gitService.models.Languages
 import com.esampaio.core.services.gitService.models.SearchQuery
@@ -14,33 +13,22 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 class ShowRepositoriesUseCase : UseCase{
 
     lateinit var gitApiService: GitApiService
-    lateinit var showRepositoriesPresenter: ShowRepositoriesPresenter
+    lateinit var showRepositoriesPresenter: ShowRepositoriesInteractor
 
-    private var onRepoSelectedSubscriber: Disposable? = null
     private var onPageChancedSubscriber: Disposable? = null
 
     private val searchQuery = SearchQuery(Languages.Java,SortType.stars);
     override fun start() {
-
         setupObservers()
-
-        showRepositoriesPresenter.showLoading();
-
         fetchRepositories(0)
-
     }
 
     override fun finish() {
-        onRepoSelectedSubscriber?.dispose()
         onPageChancedSubscriber?.dispose()
     }
 
     private fun setupObservers(){
-        onRepoSelectedSubscriber =
-            showRepositoriesPresenter.onRepositoryClicked.observeOn(AndroidSchedulers.mainThread())
-                .subscribe {repo ->
 
-                }
         onPageChancedSubscriber =
             showRepositoriesPresenter.onPageChanged.observeOn(AndroidSchedulers.mainThread())
                 .subscribe {page ->
@@ -53,14 +41,14 @@ class ShowRepositoriesUseCase : UseCase{
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                /* onNext = */ {
+                /* onNext = */ {repos ->
                     Log.d("SplashActivity", "list all repos")
-                    showRepositoriesPresenter.showRepositories(it)
+                    showRepositoriesPresenter.showRepositories(repos)
                 },
                 /* onError = */ {
                     it.printStackTrace()
                     it.message?.let { it1 -> Log.e("SplashActivity", it1) }
-                    showRepositoriesPresenter.showError(it)
+                    showRepositoriesPresenter.notifyError(it)
                 }
             )
         //subscribe.dispose()

@@ -1,4 +1,4 @@
-package com.eduardossampaio.toprepos.views.list_repositories
+package com.eduardossampaio.toprepos.views.acitivties.list_repositories
 
 import android.os.Bundle
 import android.view.View
@@ -11,7 +11,7 @@ import com.eduardossampaio.toprepos.impls.services.github.GithubApiService
 import com.eduardossampaio.toprepos.views.custom.OnReachEndOfListListener
 import com.eduardossampaio.toprepos.views.custom.ScrollableRecyclerView
 import com.esampaio.core.models.Repo
-import com.esampaio.core.presenters.repositories.ShowRepositoriesPresenter
+import com.eduardossampaio.toprepos.views.presenters.ShowRepositoriesPresenter
 import com.esampaio.core.usecases.UseCase
 import com.esampaio.core.usecases.repositories.ShowRepositoriesUseCase
 import io.reactivex.rxjava3.core.Observable
@@ -46,10 +46,10 @@ class ListRepositoriesActivity : AppCompatActivity(), ShowRepositoriesPresenter 
         //temp
         useCase = ShowRepositoriesUseCase();
 
-        (useCase as ShowRepositoriesUseCase).showRepositoriesPresenter = this
+        //(useCase as ShowRepositoriesUseCase).showRepositoriesPresenter = this
         (useCase as ShowRepositoriesUseCase).gitApiService = GithubApiService()
 
-        useCase.start()
+        //useCase.start()
     }
 
     override fun onDestroy() {

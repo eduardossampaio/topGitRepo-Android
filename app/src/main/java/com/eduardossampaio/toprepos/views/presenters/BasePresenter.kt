@@ -1,4 +1,4 @@
-package com.esampaio.core.presenters
+package com.eduardossampaio.toprepos.views.presenters
 
 interface BasePresenter {
 

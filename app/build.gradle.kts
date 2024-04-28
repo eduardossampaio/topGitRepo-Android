@@ -7,6 +7,7 @@ android {
     namespace = "com.eduardossampaio.toprepos"
     compileSdk = 33
 
+
     defaultConfig {
         applicationId = "com.eduardossampaio.toprepos"
         minSdk = 24
@@ -50,6 +51,14 @@ dependencies {
 //    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.17.+")
     implementation("com.squareup.picasso:picasso:2.8")
+
+    // Koin
+    implementation ("io.insert-koin:koin-android:3.5.3")
+
+    // Koin Tests
+    testImplementation ("io.insert-koin:koin-test:3.5.3")
+    testImplementation ("io.insert-koin:koin-test-junit4:3.5.3")
+
     implementation(project(":core"))
 //    implementation("androidx.activity:activity:1.8.0")
 //    implementation("implementation 'com.google.code.gson:gson:2.10.1'")

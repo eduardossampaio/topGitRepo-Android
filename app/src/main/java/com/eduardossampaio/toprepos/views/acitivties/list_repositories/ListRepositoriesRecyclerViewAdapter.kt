@@ -1,4 +1,4 @@
-package com.eduardossampaio.toprepos.views.list_repositories
+package com.eduardossampaio.toprepos.views.acitivties.list_repositories
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -13,7 +13,9 @@ import com.eduardossampaio.toprepos.R
 import com.esampaio.core.models.Repo
 import com.squareup.picasso.Picasso
 
-class ListRepositoriesRecyclerViewAdapter(private val context:Context): ListAdapter<Repo,ListRepositoriesRecyclerViewAdapter.ListItemViewHolder>(COMPARATOR) {
+class ListRepositoriesRecyclerViewAdapter(private val context:Context): ListAdapter<Repo, ListRepositoriesRecyclerViewAdapter.ListItemViewHolder>(
+    COMPARATOR
+) {
 
     companion object {
         private val COMPARATOR = object : DiffUtil.ItemCallback<Repo>() {

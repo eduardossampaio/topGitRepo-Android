@@ -15,10 +15,10 @@
         android:theme="@style/Theme.TopRepos"
         tools:targetApi="31">
         <activity
-            android:name=".views.list_repositories.ListRepositoriesActivity"
+            android:name=".views.acitivties.list_repositories.ListRepositoriesActivity"
             android:exported="false" />
         <activity
-            android:name=".views.SplashActivity"
+            android:name=".views.acitivties.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
