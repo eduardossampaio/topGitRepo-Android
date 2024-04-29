@@ -31,6 +31,11 @@
         <item name="android:paddingStart">12dp</item>
     </style>
 
+    <style name="UserNamePullRequest" >
+        <item name="android:textSize">12sp</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+    </style>
     <style name="ListItemIcon">
         <item name="tint">?iconColorPrimary</item>
     </style>
@@ -40,6 +45,10 @@
         <item name="android:ellipsize">end</item>
         <item name="android:maxLines">3</item>
         <item name="android:layout_marginTop">10dp</item>
+    </style>
+
+    <style name="PullRequestBody" parent="RepoDescription">
+        <item name="android:paddingStart">12dp</item>
     </style>
 
     <style name="Separator">

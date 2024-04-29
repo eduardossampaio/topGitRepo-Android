@@ -34,6 +34,7 @@ class ListPullRequestsInteractorImpl(private val flow: GitRepositoriesFlow,
     }
 
     override fun notifyError(error: Throwable) {
+        error.printStackTrace()
         presenter.showError(error);
     }
 

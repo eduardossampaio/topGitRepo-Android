@@ -1,29 +1,40 @@
 package com.eduardossampaio.toprepos.impls.services.github
 
 
-import android.util.Log
+//import retrofit2.converter.gson.GsonConverterFactory
 import com.esampaio.core.models.PullRequest
 import com.esampaio.core.models.Repo
 import com.esampaio.core.services.gitService.GitApiService
 import com.esampaio.core.services.gitService.models.SearchQuery
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.kotlin.toObservable
-import io.reactivex.rxjava3.schedulers.Schedulers
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
-//import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.jackson.JacksonConverterFactory
 import java.util.Date
+import java.util.concurrent.TimeUnit
 
 
 class GithubApiService : GitApiService {
     private var retrofit: Retrofit = Retrofit.Builder()
         .baseUrl("https://api.github.com/")
+        .client(provideOkHttpClient())
         .addConverterFactory(JacksonConverterFactory.create())
         .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
         .build()
 
+    private fun provideOkHttpClient(): OkHttpClient {
+        //this is the part where you will see all the logs of retrofit requests
+        //and responses
+        val logging = HttpLoggingInterceptor()
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+        return OkHttpClient().newBuilder()
+            .connectTimeout(5000, TimeUnit.MILLISECONDS)
+            .readTimeout(5000, TimeUnit.MILLISECONDS)
+            .addInterceptor(logging)
+            .build()
+    }
     override fun listAllRepositories(page: Int, searchQuery: SearchQuery?): Observable<List<Repo>> {
         val service =  this.retrofit.create(GithubApiServiceRetrofit::class.java)
 
@@ -40,13 +51,14 @@ class GithubApiService : GitApiService {
 
         val observable = service.listPullRequests(repo.authorName,repo.name);
         return observable.map { it.map {
-                item -> PullRequest(
-                    item.id!!,
-                    item.repoItem!!.name!!,
-                    item.title!!,
-                    item.user!!.name!!,
-                    Date(),
-                    item.body!!
+            item -> PullRequest(
+                    item.id ?: 0,
+                   item.repoItem?.name ?: "",
+                    item.title ?: "",
+                    item.user?.name?: "",
+            item.user?.avatarUrl,
+                    item.createdAt,
+                    item.body ?: "",
                 )
 
         }}.toObservable()

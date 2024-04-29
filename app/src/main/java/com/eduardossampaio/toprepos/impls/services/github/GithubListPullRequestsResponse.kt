@@ -2,6 +2,7 @@ package com.eduardossampaio.toprepos.impls.services.github
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
+import java.util.Date
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class GithubListPullRequestsResponse(
@@ -19,6 +20,9 @@ data class GithubListPullRequestsResponse(
 
     @JsonProperty("body")
     val body: String?,
+
+    @JsonProperty("created_at")
+    val createdAt: Date,
 )
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -29,7 +33,10 @@ data class RepoItem(
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class UserItem(
     @JsonProperty("login")
-    val name: String?
+    val name: String?,
+
+    @JsonProperty("avatar_url")
+    val avatarUrl: String?,
 )
 //"user": {
 //    "login": "mangyimang",

@@ -7,14 +7,45 @@
     android:layout_height="match_parent"
     tools:context=".features.detail_repo.view.DetailRepoActivity">
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="detail - repos"
+    <androidx.recyclerview.widget.RecyclerView
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:listitem="@layout/pullrequest_list_item"
+        android:id="@+id/pullrequest_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:visibility="gone"
+        android:contentDescription="@string/accessibility_loading"
+        android:id="@+id/loading"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="256dp"
+        android:layout_height="256dp"
+        app:lottie_rawRes="@raw/loading_animation"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"/>
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:visibility="gone"
+        android:contentDescription="@string/accessibility_loading"
+        android:id="@+id/showError"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="256dp"
+        android:layout_height="256dp"
+        app:lottie_rawRes="@raw/error_animation"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"/>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
