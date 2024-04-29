@@ -21,6 +21,7 @@ class ListPullRequestsInteractorImpl(private val flow: GitRepositoriesFlow,
     }
 
     override fun start(initParams: Repo) {
+        presenter.showLoading()
         useCase.interactor = this
         useCase.start(initParams)
     }

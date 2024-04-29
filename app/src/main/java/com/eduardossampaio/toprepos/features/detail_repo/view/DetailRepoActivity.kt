@@ -53,7 +53,14 @@ class DetailRepoActivity : AppCompatActivity(), ListPRPresenter {
     }
 
     override fun showPullRequestList(pullRequestList: List<PullRequest>) {
-        listPullRequestsAdapter.setItems(pullRequestList);
+        hideLoading()
+        if (pullRequestList.isEmpty()) {
+            views.emptylist.visibility = View.VISIBLE
+        } else {
+            views.emptylist.visibility = View.GONE
+            views.pullrequestList.visibility = View.VISIBLE
+            listPullRequestsAdapter.setItems(pullRequestList);
+        }
     }
 
     override fun getContext(): Context {
@@ -63,7 +70,7 @@ class DetailRepoActivity : AppCompatActivity(), ListPRPresenter {
     override fun showLoading() {
         views.loading.visibility = View.VISIBLE
         views.showError.visibility = View.GONE
-        views.pullrequestList.visibility = View.GONE
+        hideList()
     }
 
     override fun hideLoading() {
@@ -74,6 +81,11 @@ class DetailRepoActivity : AppCompatActivity(), ListPRPresenter {
     override fun showError(error: Throwable) {
         hideLoading()
         views.showError.visibility = View.VISIBLE
+        hideList()
+    }
+
+    private fun hideList(){
         views.pullrequestList.visibility = View.GONE
+        views.emptylist.visibility = View.GONE
     }
 }

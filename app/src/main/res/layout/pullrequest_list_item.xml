@@ -10,7 +10,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
 
-        app:layout_constraintBottom_toBottomOf="parent"
+
         android:id="@+id/userProfileLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
@@ -59,14 +59,21 @@
         tools:text="02/02/2024" />
 
     <TextView
+        android:maxLines="999"
         style="@style/PullRequestBody"
         android:id="@+id/prBody"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="@string/app_name"
+        android:layout_height="wrap_content"
+        android:text="@string/lorem_ipsum"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/userProfileLayout"
         app:layout_constraintTop_toBottomOf="@id/createdAt" />
 
+    <View
+
+        style="@style/Separator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintTop_toBottomOf="@+id/prBody" />
 </androidx.constraintlayout.widget.ConstraintLayout>
