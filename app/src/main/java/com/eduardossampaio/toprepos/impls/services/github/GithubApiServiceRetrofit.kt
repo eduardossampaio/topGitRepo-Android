@@ -1,14 +1,11 @@
 package com.eduardossampaio.toprepos.impls.services.github
 
 
-import android.database.Observable
-import com.eduardossampaio.toprepos.impls.services.github.GithubListRepoResponse
+import com.eduardossampaio.toprepos.impls.services.github.models.GithubListPullRequestsResponse
+import com.eduardossampaio.toprepos.impls.services.github.models.GithubListRepoResponse
 //import com.eduardossampaio.toprepos.core.services.impls.github.GithubRepo
 import io.reactivex.rxjava3.core.Flowable
-import retrofit2.Call
-import retrofit2.http.Body
 import retrofit2.http.GET
-import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 

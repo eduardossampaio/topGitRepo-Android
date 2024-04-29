@@ -41,12 +41,10 @@ open class ShowRepositoriesUseCase(private var gitApiService: GitApiService) : U
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 /* onNext = */ {repos ->
-                    Log.d("SplashActivity", "list all repos")
                     showRepositoriesInteractor.showRepositories(repos)
                 },
                 /* onError = */ {
                     it.printStackTrace()
-                    it.message?.let { it1 -> Log.e("SplashActivity", it1) }
                     showRepositoriesInteractor.notifyError(it)
                 }
             )

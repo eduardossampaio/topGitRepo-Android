@@ -2,6 +2,7 @@ package com.eduardossampaio.toprepos.impls.services.github
 
 
 //import retrofit2.converter.gson.GsonConverterFactory
+import com.eduardossampaio.toprepos.impls.services.github.utils.parse
 import com.esampaio.core.models.PullRequest
 import com.esampaio.core.models.Repo
 import com.esampaio.core.services.gitService.GitApiService
@@ -37,12 +38,10 @@ class GithubApiService : GitApiService {
     }
     override fun listAllRepositories(page: Int, searchQuery: SearchQuery?): Observable<List<Repo>> {
         val service =  this.retrofit.create(GithubApiServiceRetrofit::class.java)
-
-        val observable = service.listRepos("language:Java",searchQuery?.sortBy.toString(),page);
-        return observable.map { it.items!!.map {
-                item -> Repo(
-            item.id!!.toLong(), item.name!!, item.description!!, item.owner!!.login!!,item.owner!!.avatarUrl!!,
-            item.stargazersCount!!.toInt(),item.forksCount!!.toLong(), emptyList())
+        val language = searchQuery?.languages.toString() ?: ""
+        val observable = service.listRepos("language:${language}",searchQuery?.sortBy.toString(),page);
+        return observable.map { it.items.map {item ->
+            item.parse()
 
           }}.toObservable()
     }
@@ -50,17 +49,6 @@ class GithubApiService : GitApiService {
         val service =  this.retrofit.create(GithubApiServiceRetrofit::class.java)
 
         val observable = service.listPullRequests(repo.authorName,repo.name);
-        return observable.map { it.map {
-            item -> PullRequest(
-                    item.id ?: 0,
-                   item.repoItem?.name ?: "",
-                    item.title ?: "",
-                    item.user?.name?: "",
-            item.user?.avatarUrl,
-                    item.createdAt,
-                    item.body ?: "",
-                )
-
-        }}.toObservable()
+        return observable.map { it.map { item -> item.parse() }}.toObservable()
     }
 }
