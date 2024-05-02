@@ -5,16 +5,15 @@ import com.esampaio.core.services.gitService.GitApiService
 import com.esampaio.core.services.gitService.models.Languages
 import com.esampaio.core.services.gitService.models.SearchQuery
 import com.esampaio.core.services.gitService.models.SortType
-import com.esampaio.core.usecases.repositories.list.ShowRepositoriesInteractor
 import com.esampaio.core.usecases.repositories.list.ShowRepositoriesUseCase
 import io.reactivex.rxjava3.android.plugins.RxAndroidPlugins
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.observers.TestObserver
 import io.reactivex.rxjava3.plugins.RxJavaPlugins
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.PublishSubject
-import junit.framework.TestCase.assertEquals
-import junit.framework.TestCase.assertNotNull
-import junit.framework.TestCase.assertNull
+import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -23,7 +22,9 @@ import org.junit.runner.Description
 import org.junit.runners.model.Statement
 import org.mockito.Mockito
 import org.mockito.Mockito.mock
-
+import org.mockito.Mockito.times
+import org.mockito.Mockito.`when`
+import java.util.concurrent.TimeUnit
 
 
 class RxImmediateSchedulerRule : TestRule {
@@ -51,35 +52,15 @@ class ListRepositoriesUseCaseTest {
     @Rule
     @JvmField var testSchedulerRule = RxImmediateSchedulerRule()
 
-
-    class MockShowRepositoriesInteractor: ShowRepositoriesInteractor{
-        var error:Throwable? = null
-        var repositories: List<Repo>? = null
-        val onPageChangedSubject =  PublishSubject.create<Int>()
-        override fun showRepositories(repositories: List<Repo>) {
-            this.repositories = repositories
-        }
-
-        override val onPageChanged: Observable<Int> = onPageChangedSubject
-
-
-        override fun notifyError(error: Throwable) {
-            this.error = error
-        }
-
-    }
-
     lateinit var listShowRepositoriesUseCase: ShowRepositoriesUseCase
-
     var mockGitApiService = mock(GitApiService::class.java)
-    var mockInteractor = MockShowRepositoriesInteractor()
 
     var mockException = mock(Exception::class.java)
 
     @Before
     fun setupTest(){
         listShowRepositoriesUseCase = ShowRepositoriesUseCase(mockGitApiService)
-        listShowRepositoriesUseCase.showRepositoriesInteractor = mockInteractor
+
     }
 
     val list_1 = listOf(
@@ -101,35 +82,52 @@ class ListRepositoriesUseCaseTest {
 
     @Test
     fun testShouldSendRepositoriesListToInteractorWhenServiceRespondsSuccessfully(){
+        val testObserver = TestObserver<List<Repo>>()
+
         val queryParams = SearchQuery(Languages.Java, SortType.stars);
         Mockito.`when`(mockGitApiService.listAllRepositories(0,queryParams)).thenReturn(Observable.just(list_1))
-        listShowRepositoriesUseCase.start(null)
-        assertNotNull(mockInteractor.repositories)
-        assertEquals(mockInteractor.repositories?.size, list_1.size)
 
+        listShowRepositoriesUseCase.resultSubject.subscribe(testObserver)
+        listShowRepositoriesUseCase.start(null)
+
+        testObserver.assertNoErrors()
+        testObserver.assertValueCount(1)
+        val listResult = testObserver.values()[0]
+        assertThat(listResult, `is`(list_1))
     }
 
     @Test
     fun testShouldSendErrorToInteractorWhenServiceRespondsWithError(){
+        val testObserver = TestObserver<List<Repo>>()
+
         val queryParams = SearchQuery(Languages.Java, SortType.stars);
         Mockito.`when`(mockGitApiService.listAllRepositories(0,queryParams)).thenReturn(Observable.error(mockException))
+        listShowRepositoriesUseCase.resultSubject.subscribe(testObserver)
         listShowRepositoriesUseCase.start(null)
-        assertNull(mockInteractor.repositories)
-        assertNotNull(mockInteractor.error)
-    }
 
+        testObserver.assertError(mockException)
+
+    }
+//
     @Test
     fun testShouldAddMoreItemsToListWhenCallOnNewPage(){
+    val testObserver = TestObserver<List<Repo>>()
+
         val queryParams = SearchQuery(Languages.Java, SortType.stars);
         Mockito.`when`(mockGitApiService.listAllRepositories(0,queryParams)).thenReturn(Observable.just(list_1))
         Mockito.`when`(mockGitApiService.listAllRepositories(1,queryParams)).thenReturn(Observable.just(list_2))
-        listShowRepositoriesUseCase.start(null)
-        assertEquals(mockInteractor.repositories, list_1)
 
-        mockInteractor.onPageChangedSubject.onNext(1)
-        assertEquals(mockInteractor.repositories, list_2)
+    listShowRepositoriesUseCase.resultSubject.subscribe(testObserver)
+    listShowRepositoriesUseCase.start(null)
 
+    listShowRepositoriesUseCase.loadMore()
 
+    testObserver.assertValueCount(2)
+    val listResult = testObserver.values()[0]
+    val listResult2 = testObserver.values()[1]
+
+    assertThat(listResult, `is`(list_1))
+    assertThat(listResult2, `is`(list_2))
 
     }
 }

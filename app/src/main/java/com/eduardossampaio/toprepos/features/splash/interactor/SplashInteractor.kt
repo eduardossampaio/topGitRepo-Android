@@ -10,7 +10,7 @@ import io.reactivex.rxjava3.disposables.Disposable
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-interface SplashInteractor : BaseInteractor<Unit?>, KoinComponent{
+interface SplashInteractor : BaseInteractor<Unit?, SplashPresenter>, KoinComponent {
 }
 
 class SplashInteractorImpl(private val context: Context) : SplashInteractor {
@@ -20,12 +20,9 @@ class SplashInteractorImpl(private val context: Context) : SplashInteractor {
 
     private val flow: GitRepositoriesFlow by inject()
 
-    override fun bind(presenter: BasePresenter) {
-       splashPresenter = presenter as SplashPresenter
-    }
-
-    override fun start(initParams:Unit?) {
-         subscribe = splashPresenter.onSplashPresenterFinished.subscribe {
+    override fun start(initParams: Unit?, with: SplashPresenter) {
+        splashPresenter = with
+        subscribe = splashPresenter.onSplashPresenterFinished.subscribe {
             flow.start(context)
         }
     }

@@ -7,36 +7,33 @@ import com.eduardossampaio.toprepos.views.presenters.BasePresenter
 import com.esampaio.core.models.PullRequest
 import com.esampaio.core.models.Repo
 import com.esampaio.core.usecases.repositories.pr.ListPRUseCase
-import com.esampaio.core.usecases.repositories.pr.ListPRUseCaseInteractor
+import io.reactivex.rxjava3.disposables.Disposable
 
-interface ListPullRequestsInteractor : BaseInteractor<Repo>{
+interface ListPullRequestsInteractor : BaseInteractor<Repo,ListPRPresenter>{
 }
 class ListPullRequestsInteractorImpl(private val flow: GitRepositoriesFlow,
-                                     private val useCase: ListPRUseCase) : ListPullRequestsInteractor,ListPRUseCaseInteractor {
+                                     private val useCase: ListPRUseCase) : ListPullRequestsInteractor {
 
     lateinit var presenter: ListPRPresenter
+    var subscribe: Disposable? = null
 
-    override fun bind(presenter: BasePresenter) {
-        this.presenter = presenter as ListPRPresenter
-    }
 
-    override fun start(initParams: Repo) {
+    override fun start(initParams: Repo, with: ListPRPresenter) {
+        presenter = with
         presenter.showLoading()
-        useCase.interactor = this
-        useCase.start(initParams)
+        subscribe = useCase.start(initParams).subscribe(
+            /* onNext = */ { prList ->
+                presenter.showPullRequestList(prList)
+            },
+            /* onError = */ {
+
+                presenter.showError((it))
+            }
+        )
     }
 
     override fun destroy() {
-
-    }
-
-    override fun showPullRequestList(prList: List<PullRequest>) {
-        presenter.showPullRequestList(prList)
-    }
-
-    override fun notifyError(error: Throwable) {
-        error.printStackTrace()
-        presenter.showError(error);
+        subscribe?.dispose()
     }
 
 }

@@ -41,8 +41,7 @@ class ListRepositoriesActivity : AppCompatActivity(), ShowRepositoriesPresenter 
 
         setupViews();
 
-        interactor.bind(this)
-        interactor.start(null)
+        interactor.start(null, with = this)
     }
 
     override fun onResume() {

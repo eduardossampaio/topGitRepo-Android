@@ -35,8 +35,7 @@ class SplashActivity : AppCompatActivity(), SplashPresenter {
 
         animationView = findViewById<LottieAnimationView>(R.id.loading)
 
-        interactor.bind(this)
-        interactor.start(null)
+        interactor.start(null, with=this)
 
         Timer().schedule(timerTask {startFlow()}, 5000)
     }

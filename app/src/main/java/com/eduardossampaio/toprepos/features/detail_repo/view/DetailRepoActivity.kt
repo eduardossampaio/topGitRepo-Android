@@ -13,7 +13,6 @@ import com.eduardossampaio.toprepos.features.detail_repo.view.adapter.ListPullRe
 import com.eduardossampaio.toprepos.flow.github.dto.RepoDTO
 import com.esampaio.core.models.PullRequest
 import com.esampaio.core.models.Repo
-import com.esampaio.core.usecases.repositories.pr.ListPRUseCaseInteractor
 import org.koin.android.ext.android.inject
 
 
@@ -48,8 +47,7 @@ class DetailRepoActivity : AppCompatActivity(), ListPRPresenter {
 
     override fun onResume() {
         super.onResume()
-        interactor.bind(this)
-        interactor.start(repo)
+        interactor.start(repo, with=this)
     }
 
     override fun showPullRequestList(pullRequestList: List<PullRequest>) {

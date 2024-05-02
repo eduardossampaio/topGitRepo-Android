@@ -1,8 +1,10 @@
 package com.esampaio.core.usecases
 
-interface UseCase<T> {
+import io.reactivex.rxjava3.core.Observable
 
-    fun start(params:T);
+interface UseCase<T,R : Any> {
+
+    fun start(params:T):Observable<R>
 
     fun finish();
 }

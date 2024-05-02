@@ -18,11 +18,16 @@ class ListRepositoriesRecyclerViewAdapter(private val context:Context, private v
     companion object {
         private val COMPARATOR = object : DiffUtil.ItemCallback<Repo>() {
             override fun areItemsTheSame(oldItem: Repo, newItem: Repo): Boolean {
-                return oldItem.id == newItem.id
+                return oldItem == newItem
             }
 
             override fun areContentsTheSame(oldItem: Repo, newItem: Repo): Boolean {
-                return oldItem == newItem
+                return oldItem.name == newItem.name &&
+                        oldItem.description == newItem.description &&
+                        oldItem.authorName == newItem.authorName &&
+                        oldItem.authorProfilePictureUrl == newItem.authorProfilePictureUrl &&
+                        oldItem.starCount == newItem.starCount &&
+                        oldItem.forkCount == newItem.forkCount
             }
         }
     }
